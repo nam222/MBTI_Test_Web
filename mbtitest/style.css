@@ -1,0 +1,102 @@
+/* body {
+    width:40%
+} */
+
+article {
+    display: inline-block;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+li {
+    text-align: justify;
+}
+.question {
+    display: none;
+}
+
+.episode {
+    display: none;
+}
+
+#img {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.share {
+    margin: 0 auto;
+}
+
+.kakao_ad {
+    width: 320px;
+    margin: 0 auto;
+}
+
+.banner {
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    margin: 0 auto;
+
+}
+
+.banner-img {
+    width: 300px;
+}
+.all {
+    color: white;
+}
+.mainB {
+    background-color: #3c3c3c;
+}
+.result1 {
+    background-color: #733e3e;
+}
+.result2 {
+    background-color: #ae603e;
+}
+.result3 {
+    background-color: #bd9b40;
+}
+.result4 {
+    background-color: #745f75;
+}
+.result5 {
+    background-color: #5f585e;
+}
+.result6 {
+    background-color: #527c91;
+}
+.result7 {
+    background-color: #4c928e;
+}
+.result8 {
+    background-color: #c06f79;
+}
+.result9 {
+    background-color: #39634d;
+}
+.result10 {
+    background-color: #39595c;
+}
+.result11 {
+    background-color: #908d3f;
+}
+.result12 {
+    background-color: #6f3951;
+}
+.result13 {
+    background-color: #383b5c;
+}
+.result14 {
+    background-color: #304f5f;
+}
+.result15 {
+    background-color: #4f3d59;
+}
+.result16 {
+    background-color: #593a59;
+}

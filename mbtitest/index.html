@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우표 심리테스트</title>
+    <meta name="description" content="우표로 알아보는 당신과 닮은 동식물을 MBTI를 기반으로 추천해주는 테스트입니다.">
+    <meta property="og:type" content="website"> 
+    <meta property="og:title" content="우표 심리테스트">
+    <meta property="og:description" content="우표로 알아보는 당신과 닮은 동식물을 MBTI를 기반으로 추천해주는 테스트입니다.">
+    <meta property="og:image" content="https://stampmbti.netlify.app/image/main.png">
+    <meta property="og:url" content="https://stampmbti.netlify.app">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="/style.css">
+    
+</head>
+<body class="all mainB container">
+    <article class="start">
+        <h1 class="mt-5 text-center">우표로 알아보는<br>당신과 닮은 동식물은?</h1>
+        <img src="/image/main.png" alt="main">
+        <button type="button" class="btn btn-secondary mt-5" onclick="start();">시작하기</button>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <div class="share addthis_inline_share_toolbox mt-5"></div>
+    </article>
+    <article class="question">
+        <div class="progress mt-5">
+            <div class="progress-bar" role="progressbar" style="width: calc(100/12*1%)"></div>
+        </div>
+        <h2 id="title" class="text-center mt-5">문제</h2>
+        <input id="type" type="hidden" value="EI">
+        <button id="A" type="button" class="btn btn-outline-secondary mt-5">Primary</button>
+        <button id="B" type="button" class="btn btn-outline-secondary mt-5">Primary</button>
+    </article>
+    <article class="episode">
+        <h1 id="episode" class="text-center mt-5">에피소드 번호</h1>
+        <h2 id="content" class="text-center mt-5">에피소드 내용</h2>
+        <button id="button" type="button" class="btn btn-outline-secondary mt-5" onclick="episode();">다음</button>
+    </article>
+
+    <!-- <article class="kakao_ad mt-5">
+        <ins class="kakao_ad_area" style="display:none;" 
+        data-ad-unit    = "DAN-2WlcqNwmHCyFH4RK" 
+        data-ad-width   = "320" 
+        data-ad-height  = "100"></ins> 
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    </article>
+    <a class="mt-5 banner" href="https://www.codelion.net/catalog/Q291cnNlTm9kZTpqbW9r?utm_source=animal_test&utm_medium=web_lecture&utm_campaign=wge3142@gmail.com">
+        <img class="banner-img" src="/image/banner.png" alt="banner">
+    </a> -->
+
+    <input type="hidden" id="EI" value="0">
+    <input type="hidden" id="SN" value="0">
+    <input type="hidden" id="TF" value="0">
+    <input type="hidden" id="JP" value="0">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
+        crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script>
+        let num = 1;
+        let q = {
+            1: {"title":"편지지를 사러 왔지만 원하는<br>편지지 디자인이 보이지 않습니다.", "type":"EI", "A":"'저기요!' 바로 직원을 찾아 물어본다.", "B":"'여기있나..?' 혼자 조금 더 찾아본다."},
+            2: {"title":"다양한 종류의 편지지가 있습니다.<br>어떤 것을 고를까요?", "type":"SN", "A":"가장 인기있는 편지지를 고른다.", "B":"내 눈에 제일 이쁜 편지지를 고른다."},
+            3: {"title":"누가 봐도 이쁜 디자인의 편지지가<br>잘 보이지 않는 곳에 있는 탓에<br>팔리지 않고 있습니다.", "type":"TF", "A":"'이걸 왜 여기에 두지?' 진열 위치에 의문을 가진다.", "B":"'오! 찾았다.' 이쁜 편지지를 찾은 것에 기뻐한다."},
+            4: {"title":"우연히 가게 앞에서 만난 친구가<br>방금 전 실수로 가게 물건을 파손해<br>5만원을 물어줬다고 합니다.", "type":"TF", "A":"'뭘 파손했는데?' 먼저 어떤 걸 파손했는지 물어본다.", "B":"'진짜? 아이고..' 친구를 위로한다."},
+            5: {"title":"편지지 포장을 뜯으니 안에는<br>총 다섯 장의 편지지가 들어 있습니다.", "type":"EI", "A":"이왕 산 김에 다른 친구들까지 5명에게 쓴다.", "B":"원래 쓰려던 한 사람에게만 쓴다."},
+            6: {"title":"이제 당신은 편지를 쓰기 위해<br>펜을 들었습니다.", "type":"JP", "A":"미리 생각해 놓았던 내용을 적는다.", "B":"편지지를 펼쳐 놓고 생각한다."},
+            7: {"title":"편지를 쓰던 도중 다른 친구에게<br>오늘 시험을 망쳤다는 연락이 왔습니다.", "type":"TF", "A":"'몇 점 받았길래 그래?' 점수를 물어본다.", "B":"'괜찮아? 다음엔 잘 볼거야.' 일단 위로를 한다."},
+            8: {"title":"대화가 끝나고 당신과 친구는<br>다음 주에 만나서 밥을 먹기로 했습니다.", "type":"JP", "A":"날짜, 시간, 메뉴 등 정할 수 있는 것은 미리 정한다.", "B":"대충 날짜만 정하고 나머지는 나중에 생각한다."},
+            9: {"title":"당신은 편지를 보낸 다음 남은 하루를<br>어떻게 보낼 지 고민합니다.", "type":"EI", "A":"외출한 김에 친구들을 불러서 논다.", "B":"다시 집으로 돌아와 편하게 쉰다."},
+            10: {"title":"대략적인 위치는 알지만<br>한 번도 가본 적 없는 우체국.<br>어떻게 찾아갈까요?", "type":"JP", "A":"어플로 위치와 경로를 확실히 확인하고 간다.", "B":"일단 나간다."},
+            11: {"title":"항상 타던 버스를 놓친 당신.<br>목적지까지 노선이 같은 버스가 왔지만<br>새로 생겼는지 처음 보는 버스입니다.", "type":"SN", "A":"시간이 더 걸려도 항상 타던 버스를 기다린다.", "B":"처음 보는 버스를 타고 간다."},
+            12: {"title":"버스에서 내려 길을 걷던 중<br>누군가 당신에게 길을 물어봅니다.<br>다행히 당신이 아는 곳입니다.", "type":"SN", "A":"연재 위치에서부터 구체적으로 가는 길을 설명해준다.", "B":"목적지 주변 외 큰 건물을 기준으로 알려준다."}
+        }
+        let ep = {
+            1: {"episode":"Episode 1.", "content":"오랜만에 고마운 친구에게<br>손편지를 쓰기로 마음 먹은 당신은<br>편지지를 사러 밖으러 나섭니다."},
+            2: {"episode":"Episode 2.", "content":"편지지를 사온 당신은<br>다시 집으로 돌아왔습니다.<br>편지지를 꺼내볼까요?"},
+            3: {"episode":"Episode 3.", "content":"편지를 다 쓴 당신.<br>집 근처 우체국으로 가기 위해<br>준비를 시작합니다."},
+            4: {"episode":"Episode 4.", "content":"우체국에 도착한 당신.<br>이제 편지 봉투에 우표를 붙일 차례입니다.<br>당신과 잘 어울리는 우표는 어떤 우표일까요?"}    
+        }
+        function start() {
+            $(".start").hide();
+            $(".question").show();
+            next();
+        }
+        $("#A").click(function(){
+            let type = $("#type").val();
+            let preValue = $("#"+type).val();
+            $("#"+type).val(parseInt(preValue)+1);
+            next();
+            console.log(type, preValue)
+        });
+        $("#B").click(function(){
+            next();
+        });
+
+        function episode() {
+            $(".question").show();
+            $(".episode").hide();
+        }
+        function result() {
+            let mbti = "";
+            ($("#EI").val() >= 2 ? mbti +="E" : mbti +="I");
+            ($("#SN").val() >= 2 ? mbti +="S" : mbti +="N");
+            ($("#TF").val() >= 2 ? mbti +="T" : mbti +="F");
+            ($("#JP").val() >= 2 ? mbti +="J" : mbti +="P");
+            if(mbti=="ESTJ")
+                location.href = './result/result1.html'
+            else if(mbti == "ESTP")
+                location.href = '/result/result2.html'
+            else if(mbti == "ESFJ")
+                location.href = '/result/result3.html'
+            else if(mbti == "ESFP")
+                location.href = '/result/result4.html'
+            else if(mbti == "ENTJ")
+                location.href = '/result/result5.html'
+            else if(mbti == "ENTP")
+                location.href = '/result/result6.html'
+            else if(mbti == "ENFJ")
+                location.href = '/result/result7.html'
+            else if(mbti == "ENFP")
+                location.href = '/result/result8.html'
+            else if(mbti == "ISTJ")
+                location.href = '/result/result9.html'
+            else if(mbti == "ISTP")
+                location.href = '/result/result10.html'
+            else if(mbti == "ISFJ")
+                location.href = '/result/result11.html'
+            else if(mbti == "ISFP")
+                location.href = '/result/result12.html'
+            else if(mbti == "INTJ")
+                location.href = '/result/result13.html'
+            else if(mbti == "INTP")
+                location.href = '/result/result14.html'
+            else if(mbti == "INFJ")
+                location.href = '/result/result15.html'
+            else // INFP
+                location.href = '/result/result16.html'
+        }
+        function next() {
+            if (num == 1){
+                $(".question").hide();
+                $(".episode").show();
+                $("#episode").html(ep[1]["episode"]);
+                $("#content").html(ep[1]["content"]);
+            }
+            else if (num == 5) {
+                $(".question").hide();
+                $(".episode").show();
+                $("#episode").html(ep[2]["episode"]);
+                $("#content").html(ep[2]["content"]);
+            }
+            else if (num == 9) {
+                $(".question").hide();
+                $(".episode").show();
+                $("#episode").html(ep[3]["episode"]);
+                $("#content").html(ep[3]["content"]);
+            }
+
+            if (num >= 13) {
+                $(".question").hide();
+                $(".episode").show();
+                $("#episode").html(ep[4]["episode"]);
+                $("#content").html(ep[4]["content"]);
+                $("#button").attr('onclick', 'result();');
+                $("#button").html("결과 보기");
+                
+            }
+            else{
+                $(".progress-bar").attr('style','width: calc(100/12*'+num+'%)')
+                $("#title").html(q[num]["title"]);
+                $("#type").val(q[num]["type"]);
+                $("#A").html(q[num]["A"]);
+                $("#B").html(q[num]["B"]);
+                num++;
+            }
+        }
+    </script>
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6098ffbd5211cf4c"></script>
+
+</body>
+</html>
